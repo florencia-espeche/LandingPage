@@ -1,0 +1,518 @@
+$bgClrDark: black;
+$bgClrLight: whitesmoke;
+$fontClr: #17353d;
+$boxShadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.5);
+$clrLight: #c7cace;
+$btnBGClr: lightcoral;
+$btnFontClr: #29021c;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  font-family: "Roboto Mono", monospace;
+  color: $fontClr;
+  background: $bgClrLight;
+}
+/* Menu */
+.header {
+  background-color: $bgClrDark;
+  box-shadow: $boxShadow;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+  ul {
+    list-style: none;
+    overflow: hidden;
+    background-color: $bgClrDark;
+    margin: 0;
+    li a {
+      display: block;
+      padding: 10px 45px;
+      text-decoration: none;
+      color: $clrLight;
+      font-size: 1.2em;
+    }
+  }
+  li a:hover,
+  .menu-btn:hover {
+    background-color: $clrLight;
+    color: black;
+  }
+  .logo {
+    display: block;
+    float: left;
+    font-size: 3em;
+    color: whitesmoke;
+    margin-left: 30px;
+    text-decoration: none;
+  }
+  .menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
+  }
+  /* menu icon */
+  .menu-icon {
+    cursor: pointer;
+    display: block;
+    float: right;
+    padding: 30px;
+    position: relative;
+    user-select: none;
+    .navicon {
+      background: $clrLight;
+      display: block;
+      height: 2px;
+      position: relative;
+      transition: 0.2s ease-out;
+      width: 18px;
+      &:before,
+      &:after {
+        background: $clrLight;
+        content: "";
+        display: block;
+        height: 100%;
+        position: absolute;
+        transition: all 0.2s ease-out;
+        width: 100%;
+      }
+      &:before {
+        top: 5px;
+      }
+      &:after {
+        top: -5px;
+      }
+    }
+  }
+  /* Fin menu icon*/
+
+  /* menu boton */
+  .menu-btn {
+    display: none;
+    &:checked ~ {
+      .menu {
+        max-height: 240px;
+      }
+      .menu-icon {
+        .navicon {
+          background: transparent;
+        }
+        .navicon:before {
+          transform: rotate(-45deg);
+        }
+        .navicon:after {
+          transform: rotate(45deg);
+        }
+      }
+      .menu-icon:not(.steps) {
+        .navicon:before,
+        .navicon:after {
+          top: 0;
+        }
+      }
+    }
+  }
+}
+
+/* TABLET & DESKTOP 48em = 768px */
+
+@media (min-width: 48em) {
+  .header li {
+    float: left;
+  }
+  .header li a {
+    padding: 20px 30px !important;
+  }
+  .header .menu {
+    clear: none;
+    float: right;
+    max-height: none;
+  }
+  .header .menu-icon {
+    display: none;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+p,
+label {
+  margin: 0;
+}
+
+section {
+  padding: 6em 0 3em;
+}
+.container {
+  width: 100%;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  /* 0.5 * 16px =  8px top y bottom */
+  /* 1.25 * 16px = 20px left y right */
+  padding: 0.5em 1.25em;
+  background: $btnBGClr;
+  color: $btnFontClr;
+  /* 1.125 * 16px = 18px */
+  font-size: 1.125em;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 0.25em;
+  transition: transform 250ms ease-in-out, opacity 250ms linear;
+}
+
+.btn:hover,
+.btn:focus {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.hero-title {
+  /*
+   3 * 16px(no hereda font-size del padre) = 48px => menor tamaño 
+   4.5 * 16px = 72 => mayor tamaño
+   calc(5vw + 1rem) => es el valor intermedio que va creciendo 
+   https://developer.mozilla.org/en-US/docs/Web/CSS/calc
+   https://developer.mozilla.org/en-US/docs/Web/CSS/clamp
+  */
+  font-size: clamp(3rem, calc(5vw + 1rem), 4.5rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.section-title {
+  text-align: center;
+  font-size: clamp(2.5rem, calc(5vw + 1rem), 4rem);
+  line-height: 1;
+  margin-bottom: 1.5em;
+}
+
+.split {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  & > * {
+    max-width: 30%;
+    min-width: 15em;
+  }
+}
+
+.spacing > * + * {
+  /*   
+  cualquier elemento dentro de cualquier elemento de la clase spacing
+  
+  */
+  margin-top: var(--spacer, 2rem);
+}
+
+.hero {
+  text-align: center;
+  padding: 8em 0 6em;
+  background: $bgClrDark;
+  color: whitesmoke;
+}
+
+.skills {
+  &__items {
+    position: relative;
+    transform: scale(0.85);
+    transition: transform 250ms ease-in-out;
+    text-align: center;
+    font-weight: 600;
+
+    &:hover,
+    &:focus {
+      transform: scale(1);
+
+      .skills__details {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__details {
+    margin-top: 1.5em;
+    opacity: 0;
+    transition: opacity 250ms linear;
+  }
+}
+
+/* About Section  */
+.about {
+  min-height: 50vh;
+  flex-direction: column;
+
+  &-info {
+    text-align: center;
+
+    &-desc {
+      font-size: 1.3rem;
+      line-height: 2rem;
+    }
+  }
+
+  &-img {
+    margin-top: 5em;
+    text-align: center;
+
+    &-wrapper {
+      height: auto;
+      max-width: 400px;
+      position: relative;
+      display: inline-block;
+
+      & img {
+        max-width: 90%;
+        display: block;
+      }
+
+      &::after {
+        position: absolute;
+        content: "";
+        top: 50%;
+        transform: translateY(-50%);
+        width: 50%;
+        height: 120%;
+        background-color: $clrLight;
+        z-index: -1;
+      }
+    }
+  }
+}
+
+/* End About Section  */
+
+/* Services section  */
+
+.services {
+  &-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+
+    .service {
+      width: 100%;
+      min-height: 20em;
+      position: relative;
+      transition: 0.3s ease transform;
+
+      &-card {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        transform-style: preserve-3d;
+        transition: 0.3s ease transform;
+        display: block;
+      }
+
+      &-front,
+      &-back {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+
+        &-heading {
+          font-size: 2em;
+          text-transform: capitalize;
+        }
+      }
+
+      &-front i {
+        font-size: 6em;
+        margin-bottom: 10px;
+      }
+
+      &-back {
+        transform: rotateY(180deg);
+
+        &-desc {
+          font-size: 1em;
+          margin-top: 10px;
+          text-align: center;
+        }
+      }
+
+      &:hover {
+        .service-card {
+          transform: rotateY(180deg);
+        }
+      }
+      &:nth-child(odd) {
+        background-color: $clrLight;
+        color: #1b1d1d;
+      }
+      &:nth-child(2) {
+        .service-card {
+          color: #29021c;
+          .service-front {
+            position: relative;
+          }
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: lightcoral;
+            z-index: -1;
+          }
+        }
+      }
+    }
+  }
+}
+/* End Services section  */
+
+/* Contact section */
+
+form {
+  padding: 0 1em;
+
+  textarea {
+    min-height: 100px;
+  }
+}
+.input-field {
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: $clrLight;
+  border-radius: 5px;
+  border: 1px solid #17353d;
+}
+
+.submit-btn {
+  margin-top: 1em;
+  width: 100%;
+  border: none;
+}
+/* End Contact section*/
+
+/* Footer section  */
+.footer {
+  min-height: 15vh;
+  background-color: $bgClrDark;
+  color: $clrLight;
+  text-align: center;
+
+  &-social-follow {
+    &-heading {
+      font-size: 1.5em;
+      padding-top: 10px;
+      letter-spacing: 0.2rem;
+    }
+    .footer-social-icon a {
+      color: $clrLight;
+      font-size: 3rem;
+      margin: 0.4rem;
+      display: inline-block;
+    }
+  }
+}
+/* End Footer section  */
+
+/* TABLET & DESKTOP 48em = 768px */
+
+@media (min-width: 48em) {
+  .hero {
+    height: 100vh;
+    flex-direction: row;
+    padding-left: 10%;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../images/img-1.jpg);
+    background-size: cover;
+    background-position: 8em;
+    &-info {
+      max-width: 30%;
+      text-align: left;
+      &-subheading {
+        font-size: 1.3rem;
+        letter-spacing: 0.5rem;
+      }
+    }
+    &-img {
+      display: none;
+    }
+  }
+  .about {
+    width: 100%;
+    background-blend-mode: multiply;
+      background: 
+        url(../images/img-2.jpg),
+        radial-gradient(#444, #ccc);
+    background-blend-mode: multiply;
+    background-size: cover;
+    &-info {
+      text-align: center;
+      width: 30em;
+      margin: 0 auto;
+      color: whitesmoke;
+    }
+    &-img {
+      display: none;
+    }
+  }
+  .split {
+    max-width: 60em;
+    margin: 0 auto;
+  }
+  .services {
+		max-width: 65em;
+		padding-top: 20px;
+    margin: 0 auto;
+    &-info {
+      flex-direction: row;
+      width: 100%;
+      .service {
+        margin:0;
+        line-height: 1;
+      }
+    }
+  }
+  .contact {
+    form {
+      max-width: 40em;
+      margin: 0 auto;
+    }
+  }
+  .footer-social-follow {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    > * {
+      margin: 1em;
+    }
+  }
+}
